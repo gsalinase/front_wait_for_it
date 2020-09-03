@@ -1,16 +1,28 @@
 <template>
   <div>
-    kfjfdklgjfdl
+    <Home v-if="isLoggedIn" />
+    <Landing v-else/>
   </div>
 </template>
 
 <script>
+// Pages
+import Home from '@/components/views/Home'
+import Landing from '@/components/views/Landing'
+
 export default {
   name: 'HomePage',
+  components: {
+    Home,
+    Landing
+  },
   data () {
     return {
 
     }
+  },
+  computed: {
+    isLoggedIn: function () { return this.$store.getters.isLoggedIn }
   }
 }
 </script>

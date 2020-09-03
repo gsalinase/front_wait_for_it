@@ -28,7 +28,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    login ({commit}, user) {
+    login ({
+      commit
+    }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios({
@@ -45,13 +47,45 @@ export default new Vuex.Store({
             resolve(resp)
           })
           .catch(err => {
+            switch (err.response.status) {
+              case 400:
+                console.error(err.response.status, err.message)
+                Vue.notify({
+                  group: 'foo',
+                  title: 'No encontrado',
+                  text: err.response.data
+                })
+                break
+
+              case 401:
+                Vue.notify({
+                  group: 'foo',
+                  type: 'warn',
+                  title: 'No autorizado',
+                  text: err.response.data
+                })
+                localStorage.removeItem('token')
+                this.router.push('/logout')
+                break
+
+              default:
+                console.error(err.response.status, err.message)
+                Vue.notify({
+                  group: 'foo',
+                  type: 'error',
+                  title: 'Error de Servidor',
+                  text: err.response.data
+                })
+            }
             commit('auth_error')
             localStorage.removeItem('token')
             reject(err)
           })
       })
     },
-    register ({commit}, user) {
+    register ({
+      commit
+    }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios({
@@ -60,22 +94,54 @@ export default new Vuex.Store({
           method: 'POST'
         })
           .then(resp => {
-            const token = resp.data.token
-            const user = resp.data
+            const token = resp.headers.authorization
+            const user = resp.data.email
             localStorage.setItem('token', token)
             axios.defaults.headers.common['Authorization'] = token
             commit('auth_success', token, user)
             resolve(resp)
           })
           .catch(err => {
+            switch (err.response.status) {
+              case 400:
+                console.error(err.response.status, err.message)
+                Vue.notify({
+                  group: 'foo',
+                  title: 'No encontrado',
+                  text: err.response.data
+                })
+                break
+
+              case 401:
+                Vue.notify({
+                  group: 'foo',
+                  type: 'warn',
+                  title: 'No autorizado',
+                  text: err.response.data
+                })
+                localStorage.removeItem('token')
+                this.router.push('/logout')
+                break
+
+              default:
+                console.error(err.response.status, err.message)
+                Vue.notify({
+                  group: 'foo',
+                  type: 'error',
+                  title: 'Error de Servidor',
+                  text: err.response.data
+                })
+            }
             commit('auth_error', err)
             localStorage.removeItem('token')
             reject(err)
           })
       })
     },
-    logout ({commit}) {
-      return new Promise((resolve, reject) => {
+    logout ({
+      commit
+    }) {
+      return new Promise((resolve) => {
         commit('logout')
         localStorage.removeItem('token')
         delete axios.defaults.headers.common['Authorization']

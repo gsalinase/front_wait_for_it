@@ -1,6 +1,8 @@
 <template>
   <footer class="footer">
-    <div>kdjfdksdl</div>
+    <div>
+      <img width="60" src="../assets/logo-white.svg" alt="Logo Wait for It">
+    </div>
   </footer>
 </template>
 <style>
