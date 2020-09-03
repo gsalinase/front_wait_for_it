@@ -1,10 +1,16 @@
 <template>
   <div id="app">
-    <Navbar/>
-    <main class="container main">
+    <notifications group="foo" />
+    <template v-if="this.$route.path == '/login' || this.$route.path == '/signup'">
+
+    </template>
+    <template v-else>
+      <Navbar :isLoggedIn="isLoggedIn"/>
+    </template>
+    <main class="main">
       <router-view/>
     </main>
-    <Footer/>
+    <Footer v-if="!this.$route.path == '/login' || !this.$route.path == '/signup'"/>
   </div>
 </template>
 
@@ -18,6 +24,9 @@ export default {
   components: {
     Navbar,
     Footer
+  },
+  computed: {
+    isLoggedIn () { return this.$store.getters.isLoggedIn }
   },
   methods: {
     logout () {
@@ -41,6 +50,6 @@ export default {
 </script>
 <style scoped>
   .main {
-    padding: 1.5rem;
+    /* padding: 0 1.5rem; */
   }
 </style>
