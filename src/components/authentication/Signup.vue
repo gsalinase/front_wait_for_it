@@ -5,7 +5,9 @@
         <div class="column">
           <div class="px-6 py-6">
             <div class="pb-5">
-              <img width="50" src="../../assets/logo.svg" alt="Logo Wait for It">
+              <router-link :to="{ name: 'home' }">
+                <img width="50" src="../../assets/logo.svg" alt="Logo Wait for It">
+              </router-link>
             </div>
             <div class="signup--wrapper">
               <h1 class="title">Crean una cuenta en W4IT</h1>
@@ -56,6 +58,10 @@
             </div>
             <div class="buttons py-5">
               <b-button type="is-primary" native-type="submit" expanded>Crear Cuenta</b-button>
+              <!-- <b-button type="is-primary" native-type="submit" expanded>
+                <b-icon icon="facebook" size="is-small" class="pr-3 is-facebook" @click.stop="a"></b-icon>
+                Crear Cuenta con Facebook
+              </b-button> -->
             </div>
           </div>
         </div>
@@ -104,6 +110,10 @@ export default {
 <style scoped>
   .h-100 {
     height: 100vh;
+  }
+
+  .buttons .is-primary:nth-child(2) {
+    background-color: #3b5998;
   }
 
   .signup--bg {

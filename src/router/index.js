@@ -8,7 +8,10 @@ import HomePage from '@/pages/HomePage.vue'
 // Authentication
 import Signup from '@/components/authentication/Signup.vue'
 import Login from '@/components/authentication/Login.vue'
-import Secure from '@/components/authentication/Secure.vue'
+import NewTicket from '@/components/tickets/NewTicket.vue'
+
+// User
+import Settings from '@/components/user/Settings.vue'
 
 Vue.use(Router)
 
@@ -31,12 +34,14 @@ let router = new Router({
       component: Login
     },
     {
-      path: '/secure',
-      name: 'secure',
-      component: Secure,
-      meta: {
-        requiresAuth: true
-      }
+      path: '/settings',
+      name: 'settings',
+      component: Settings
+    },
+    {
+      path: '/ticket/new',
+      name: 'new-ticket',
+      component: NewTicket
     }
   ]
 })
