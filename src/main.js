@@ -9,6 +9,8 @@ import Axios from 'axios'
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 import Notifications from 'vue-notification'
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
 
 // Vue Register
 Vue.config.productionTip = false
@@ -16,6 +18,7 @@ Vue.use(Buefy)
 Vue.prototype.$http = Axios
 Vue.use(Vuex)
 Vue.use(Notifications)
+Vue.use(Chartkick.use(Chart))
 
 // Get Session storage token
 const token = localStorage.getItem('token')
