@@ -48,7 +48,7 @@ export default {
     createTicket (companyId) {
       const userId = this.$store.state.user.id
 
-      axios.post('http://localhost:3000/tickets', {
+      axios.post(`${process.env.ROOT_API}/tickets`, {
         'ticket': {
           'company_id': companyId,
           'user_id': userId,
@@ -69,7 +69,7 @@ export default {
   created () {
     let $vm = this
 
-    axios.get('http://localhost:3000/companies')
+    axios.get(`${process.env.ROOT_API}/companies`)
       .then(function (response) {
         console.log(response.data)
         $vm.companies = response.data

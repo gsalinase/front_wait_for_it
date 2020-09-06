@@ -37,7 +37,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios({
-          url: 'http://localhost:3000/login',
+          url: `${process.env.ROOT_API}/login`,
           data: user,
           method: 'POST'
         })
@@ -96,7 +96,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         commit('auth_request')
         axios({
-          url: 'http://localhost:3000/signup',
+          url: `${process.env.ROOT_API}/signup`,
           data: user,
           method: 'POST'
         })
@@ -150,7 +150,7 @@ export default new Vuex.Store({
     }) {
       return new Promise((resolve) => {
         axios({
-          url: 'http://localhost:3000/logout',
+          url: `${process.env.ROOT_API}/logout`,
           method: 'DELETE'
         })
         commit('logout')
