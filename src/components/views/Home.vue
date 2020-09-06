@@ -38,9 +38,8 @@ export default {
     getTicket (id) {
       let $vm = this
 
-      axios.get(`http://localhost:3000/tickets/${id}`)
+      axios.get(`${process.env.ROOT_API}/tickets/${id}`)
         .then(function (response) {
-          console.log(response.data)
           $vm.ticketItems = response.data
         })
         .catch(function (error) {
@@ -52,7 +51,7 @@ export default {
     let $vm = this
     const userId = this.$store.state.user.id
 
-    axios.get(`http://localhost:3000/tickets?user_id=${userId}`)
+    axios.get(`${process.env.ROOT_API}/tickets?user_id=${userId}`)
       .then(function (response) {
         $vm.ticketResponse = response.data
       })
