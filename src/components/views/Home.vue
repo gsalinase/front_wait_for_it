@@ -40,7 +40,6 @@ export default {
 
       axios.get(`${process.env.ROOT_API}/tickets/${id}`)
         .then(function (response) {
-          console.log(response.data)
           $vm.ticketItems = response.data
         })
         .catch(function (error) {

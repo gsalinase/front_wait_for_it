@@ -71,7 +71,6 @@ export default {
 
     axios.get(`${process.env.ROOT_API}/companies`)
       .then(function (response) {
-        console.log(response.data)
         $vm.companies = response.data
       })
       .catch(function (error) {
