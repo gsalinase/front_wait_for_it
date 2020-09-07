@@ -40,8 +40,13 @@ export default new Vuex.Store({
           url: `${process.env.ROOT_API}/login`,
           data: user,
           method: 'POST'
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
           .then(resp => {
+            console.log(resp.headers['authorization'])
             const token = resp.headers.authorization
             const user = resp.data
             localStorage.setItem('token', token)
