@@ -46,7 +46,6 @@ export default new Vuex.Store({
           }
         })
           .then(resp => {
-            console.log(resp.headers['authorization'])
             const token = resp.headers.authorization
             const user = resp.data
             localStorage.setItem('token', token)
