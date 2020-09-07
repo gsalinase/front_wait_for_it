@@ -40,6 +40,10 @@ export default new Vuex.Store({
           url: `${process.env.ROOT_API}/login`,
           data: user,
           method: 'POST'
+        }, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
         })
           .then(resp => {
             const token = resp.headers.authorization
