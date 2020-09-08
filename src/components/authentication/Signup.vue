@@ -10,7 +10,8 @@
               </router-link>
             </div>
             <div class="signup--wrapper">
-              <h1 class="title">Crean una cuenta en W4IT</h1>
+              <h1 class="title" v-if="isCompany">Crea una cuenta Empresa en W4IT</h1>
+              <h1 class="title" v-else>Crea una cuenta en W4IT</h1>
               <div class="columns">
                 <div class="column">
                   <b-field label="Nombre Completo">
@@ -50,7 +51,7 @@
                 </div>
               </div>
 
-              <div class="field py-3">
+              <div class="field py-3" v-if="!isCompany">
                 <b-checkbox v-model="checkbox" true-value="Sí" false-value="No">
                   ¿Tu trabajo es de primera necesidad?
                 </b-checkbox>
@@ -84,6 +85,11 @@ export default {
       checkbox: false
     }
   },
+  computed: {
+    isCompany () {
+      return (this.$route.params.type === 'company')
+    }
+  },
   methods: {
     register () {
       let data = {
@@ -92,11 +98,12 @@ export default {
           password: this.password,
           name: this.name,
           phone: this.phone,
-          role: 1,
+          role: this.isCompany ? 1 : 0,
           birthday: this.birthday,
           critical_role: this.checkbox
         }
       }
+      console.log(data.role)
       this.$store.dispatch('register', data)
         .then(() => this.$router.push('/'))
         .catch(err => console.log(err))

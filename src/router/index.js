@@ -8,7 +8,11 @@ import HomePage from '@/pages/HomePage.vue'
 // Authentication
 import Signup from '@/components/authentication/Signup.vue'
 import Login from '@/components/authentication/Login.vue'
+
+// Pages
 import NewTicket from '@/components/tickets/NewTicket.vue'
+import Companies from '@/components/companies/Companies.vue'
+import NewCompany from '@/components/companies/NewCompany.vue'
 
 // User
 import Settings from '@/components/user/Settings.vue'
@@ -42,6 +46,16 @@ let router = new Router({
       path: '/ticket/new',
       name: 'new-ticket',
       component: NewTicket
+    },
+    {
+      path: '/company/new',
+      name: 'new-company',
+      component: NewCompany
+    },
+    {
+      path: '/companies',
+      name: 'companies',
+      component: Companies
     }
   ]
 })

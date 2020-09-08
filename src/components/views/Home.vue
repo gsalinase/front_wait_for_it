@@ -1,7 +1,7 @@
 <template>
   <div class="py-6 px-4">
-    <Tickets/>
     <Dashboard v-if="this.$store.state.user.role == 1"/>
+    <Tickets v-else/>
   </div>
 </template>
 
