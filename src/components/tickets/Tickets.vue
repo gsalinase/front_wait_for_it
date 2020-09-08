@@ -17,10 +17,11 @@
               <p class="title has-text-danger">
                 {{ ticket.ticket_number }}
               </p>
-              <p class="subtitle">
+              <p class="subtitle mb-0">
                 <strong>Empresa: </strong>
                 {{ ticketResponse.companies[index].name }}
               </p>
+              <small><strong>Estado:</strong> {{ ticketState(ticket.state) }}</small>
             </div>
           </div>
         </div>
@@ -84,6 +85,10 @@ export default {
         .catch(function (error) {
           console.error(error)
         })
+    },
+    ticketState (state) {
+      const labels = ['En espera', 'Finalizado']
+      return labels[state]
     }
   },
   mounted () {
@@ -99,7 +104,7 @@ export default {
         $vm.errored = true
       })
     /* eslint-disable */
-        .finally(() => this.loading = false)
+      .finally(() => this.loading = false)
     }
   }
 

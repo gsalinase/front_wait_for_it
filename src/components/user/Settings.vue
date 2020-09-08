@@ -17,7 +17,7 @@
             <div class="columns">
               <div class="column is-two-thirds">
                 <b-field label="Nombre Completo">
-                  <b-input v-model="user.name" placeholder="John Doe"></b-input>
+                  <b-input v-model="name" placeholder="John Doe"></b-input>
                 </b-field>
               </div>
             </div>
@@ -39,7 +39,7 @@
               <div class="column is-two-thirds">
                 <label class="label">Correo Electrónico</label>
                 <b-field>
-                  <b-input placeholder="Ingrese su correo" v-model="user.email" type="email" icon="email"
+                  <b-input placeholder="Ingrese su correo" v-model="email" type="email" icon="email"
                     icon-right="close-circle" icon-right-clickable>
                   </b-input>
                 </b-field>
@@ -47,7 +47,7 @@
             </div>
 
             <div class="field py-3">
-              <b-checkbox v-model="criticalRole" true-value="Sí" false-value="No">
+              <b-checkbox v-model="criticalRole" :true-value="true" :false-value="false">
                 ¿Tu trabajo es de primera necesidad?
               </b-checkbox>
             </div>
@@ -88,13 +88,20 @@
 </template>
 
 <script>
+// Libraries
+import axios from 'axios'
+import router from '../../router'
+
 export default {
   name: 'HomePage',
   data () {
     return {
-      name: '',
-      email: '',
-      password: '',
+      password: null,
+      editName: null,
+      editEmail: null,
+      editPhone: null,
+      editBirthday: null,
+      editCriticalRole: null,
       checkbox: false,
       loading: false,
       errored: false,
@@ -102,34 +109,94 @@ export default {
     }
   },
   computed: {
-    user () {
-      return this.$store.state.user
+    user: {
+      // getter
+      get () {
+        return this.$store.state.user
+      }
     },
-    phone () {
-      return Number(this.user.phone)
+    name: {
+      // getter
+      get () {
+        return this.user.name
+      },
+      // setter
+      set (newValue) {
+        this.editName = newValue
+      }
     },
-    birthday () {
-      const birthday = new Date(this.user.birthday)
-      return birthday
+    email: {
+      // getter
+      get () {
+        return this.user.email
+      },
+      // setter
+      set (newValue) {
+        this.editEmail = newValue
+      }
     },
-    criticalRole () {
-      return this.user.critical_role
+    phone: {
+      // getter
+      get () {
+        return Number(this.user.phone)
+      },
+      // setter
+      set (newValue) {
+        this.editPhone = newValue
+      }
+    },
+    birthday: {
+      // getter
+      get () {
+        const birthday = new Date(this.user.birthday)
+        return birthday
+      },
+      // setter
+      set (newValue) {
+        this.editBirthday = newValue
+      }
+    },
+    criticalRole: {
+      // getter
+      get () {
+        return this.user.critical_role
+      },
+      // setter
+      set (newValue) {
+        this.editCriticalRole = newValue
+      }
     }
   },
   methods: {
     modifyProfile () {
-      let data = {
+      let $vm = this
+      const userId = this.$store.state.user.id
+      const role = this.$store.state.user.role
+
+      axios.put(`${process.env.ROOT_API}/users/${userId}`, {
         user: {
-          email: this.email,
-          name: this.name,
-          phone: this.phone,
-          birthday: this.birthday,
-          critical_role: this.checkbox
+          email: this.editEmail || this.mail,
+          name: this.editName || this.name,
+          phone: this.editPhone || this.phone,
+          role: role,
+          birthday: this.editBirthday || this.birthday,
+          critical_role: this.editCriticalRole || this.criticalRole
         }
-      }
-      this.$store.dispatch('register', data)
-        .then(() => this.$router.push('/'))
-        .catch(err => console.log(err))
+      })
+        .then(function (response) {
+          console.log(response.data)
+          localStorage.setItem('user', JSON.stringify(response.data))
+          $vm.$store.commit('get_user', response.data)
+          router.push('/')
+          $vm.$notify({
+            group: 'foo',
+            title: 'Perfil Actualizado',
+            text: 'Tu perfil fue modificado correctamente'
+          })
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
     }
   }
 }

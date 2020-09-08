@@ -8,13 +8,12 @@
               ¡Deja de hacer filas!
             </h1>
             <h2 class="subtitle">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eius magnam voluptatem minima vel iusto harum
-              repellat officiis ipsa? Odio aperiam doloribus animi culpa quidem ea reiciendis laboriosam nam dicta
-              obcaecati.
+              Simplifica tus trámites usando nuestra aplicación. Obtén un ticket de atención desde la comodidad de tu
+              casa.
             </h2>
             <div class="buttons is-center">
-              <b-button type="is-primary" inverted>Crear una Cuenta</b-button>
-              <b-button type="is-primary" inverted outlined>Iniciar Sesión</b-button>
+              <b-button type="is-primary" inverted @click="goSignup">Crear una Cuenta</b-button>
+              <b-button type="is-primary" inverted outlined @click="goLogin">Iniciar Sesión</b-button>
             </div>
           </div>
         </div>
@@ -26,7 +25,14 @@
 
 <script>
 export default {
-
+  methods: {
+    goSignup () {
+      this.$router.push('/signup')
+    },
+    goLogin () {
+      this.$router.push('/login')
+    }
+  }
 }
 
 </script>
@@ -36,4 +42,5 @@ export default {
     text-align: center;
     justify-content: center;
   }
+
 </style>

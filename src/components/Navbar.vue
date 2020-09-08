@@ -6,11 +6,32 @@
       </b-navbar-item>
     </template>
     <template slot="start" v-if="isLoggedIn">
-      <b-navbar-item>
+      <b-navbar-item v-if="$store.state.user.role == 0">
         <router-link :to="{ name: 'new-ticket' }">
           Pedir un número
         </router-link>
       </b-navbar-item>
+      <template v-if="$store.state.user.role == 1">
+        <b-navbar-item>
+          <router-link :to="{ name: 'new-company' }">
+            Crear Empresa
+          </router-link>
+        </b-navbar-item>
+        <b-navbar-item>
+          <router-link :to="{ name: 'companies' }">
+            Mis Empresas
+          </router-link>
+        </b-navbar-item>
+      </template>
+    </template>
+    <template slot="start" v-else-if="!isLoggedIn">
+      <b-navbar-dropdown label="Empresas" tag="div">
+        <b-navbar-item>
+          <router-link :to="{ name: 'signup', params: { type: 'company'} }">
+            Crear Cuenta Empresa
+          </router-link>
+        </b-navbar-item>
+      </b-navbar-dropdown>
     </template>
 
     <template slot="end">
@@ -51,7 +72,7 @@ export default {
     logout () {
       this.$store.dispatch('logout')
         .then(() => {
-          this.$router.push('/login')
+          this.$router.push('/')
         })
     }
   }
