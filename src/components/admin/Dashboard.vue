@@ -2,7 +2,17 @@
   <div>
     <h1 class="title">Dashboard</h1>
     <h3 class="subtitle py-5">Empresas Creadas</h3>
-    <area-chart :data="lineChart"></area-chart>
+    <div class="columns">
+      <div class="column is-three-fifths">
+        <area-chart :data="lineChart"></area-chart>
+      </div>
+      <div class="column">
+        <h3 class="subtitle py-5">Últimos Tickets</h3>
+      </div>
+    </div>
+    <div>
+      <h3 class="subtitle py-5">Llamar un número</h3>
+    </div>
   </div>
 </template>
 
@@ -41,6 +51,7 @@ export default {
       })
   }
 }
+
 </script>
 
 <style scoped>
