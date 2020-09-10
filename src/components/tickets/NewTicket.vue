@@ -54,7 +54,7 @@ export default {
           'user_id': userId,
           'ticket_number': Math.random() * 100,
           'priority': false,
-          'state': 1
+          'state': 0
         }
       })
         .then(function (response) {
