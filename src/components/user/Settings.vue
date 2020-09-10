@@ -58,7 +58,7 @@
         </form>
         <hr />
         <!-- Password -->
-        <form class="pt-4" @submit.prevent="modifyPassword">
+        <form class="pt-4" @submit.prevent="updatePassword">
           <div>
             <h3 class="subtitle"><strong>Contraseña</strong></h3>
             <div class="columns">
@@ -72,7 +72,7 @@
             <div class="columns">
               <div class="column is-two-thirds">
                 <b-field label="Vuelve a ingresar tu contraseña">
-                  <b-input type="password" password-reveal>
+                  <b-input type="password" v-model="passwordConfirmation" password-reveal>
                   </b-input>
                 </b-field>
               </div>
@@ -102,6 +102,7 @@ export default {
       editPhone: null,
       editBirthday: null,
       editCriticalRole: null,
+      passwordConfirmation: '',
       checkbox: false,
       loading: false,
       errored: false,
@@ -191,6 +192,28 @@ export default {
           $vm.$notify({
             group: 'foo',
             title: 'Perfil Actualizado',
+            text: 'Tu perfil fue modificado correctamente'
+          })
+        })
+        .catch(function (error) {
+          console.error(error)
+        })
+    },
+    updatePassword () {
+      let $vm = this
+
+      axios.put(`${process.env.ROOT_API}/update_password`, {
+        user: {
+          password: this.password,
+          password_confirmation: this.passwordConfirmation
+        }
+      })
+        .then(function (response) {
+          console.log(response.data)
+          router.push('/')
+          $vm.$notify({
+            group: 'foo',
+            title: 'Contraseña modificada',
             text: 'Tu perfil fue modificado correctamente'
           })
         })
